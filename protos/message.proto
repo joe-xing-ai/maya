@@ -1,0 +1,127 @@
+syntax = "proto2";
+
+message Message {
+  required string tag = 1;
+  required string timestamp = 2;
+  required string driver_name = 3;
+  required string vehicle_name = 4;
+  required string road_segment_name = 5;
+  required Point3D car_center = 6;
+  required BoundingBox car_bounding_box = 7;
+  required Tire car_tire = 8;
+  required Velocity car_velocity = 9;
+  required float motor_input = 10;
+  required float brake_input = 11;
+  required float steer_input = 12;
+  required float hand_brake_input = 13;
+  required int32 left_light = 14;
+  required int32 right_light = 15;
+  repeated BoundingBox2D car_bounding_boxes_2d = 16;
+  required TrafficLights traffic_lights = 17;
+  required TrafficLightStopPoints traffic_light_stop_points = 18;
+}
+
+message LidarPointCloud {
+  repeated Point3D list_of_points = 1;
+}
+
+message HDMap {
+  required RoadSegment road_segment = 1;
+  required LaneMarkers lane_markers = 2;
+  required RoadBounds road_bounds = 3;
+  required RoadDivider road_divider = 4;
+}
+
+message Point3D {
+  required float x = 1;
+  required float y = 2;
+  required float z = 3;
+}
+
+message BoundingBox {
+  required Point3D center = 1;
+  required Point3D bottom_left_rear = 2;
+  required Point3D bottom_right_rear = 3;
+  required Point3D bottom_right_front = 4;
+  required Point3D bottom_left_front = 5;
+
+  required Point3D top_left_rear = 6;
+  required Point3D top_right_rear = 7;
+  required Point3D top_right_front = 8;
+  required Point3D top_left_front = 9;
+}
+
+message Velocity {
+  required float vx = 1;
+  required float vy = 2;
+  required float vz = 3;
+}
+
+message Tire {
+  required float right_front_tire_angle = 1;
+  required float left_front_tire_angle = 2;
+  required float right_rear_tire_angle = 3;
+  required float left_rear_tire_angle = 4;
+}
+
+message RoadSegment {
+  required string name = 1;
+  required Point3D left_rear = 2;
+  required Point3D right_rear = 3;
+  required Point3D right_front = 4;
+  required Point3D left_front = 5;
+}
+
+message RoadDivider {
+  required Point3D left_rear = 1;
+  required Point3D right_rear = 2;
+  required Point3D right_front = 3;
+  required Point3D left_front = 4;
+}
+
+message LaneMarker {
+  required Point3D left_rear = 1;
+  required Point3D right_rear = 2;
+  required Point3D right_front = 3;
+  required Point3D left_front = 4;
+}
+
+message RoadBound {
+  required Point3D left_rear = 1;
+  required Point3D right_rear = 2;
+  required Point3D right_front = 3;
+  required Point3D left_front = 4;
+}
+
+message TrafficLightStopPoint {
+  required Point3D center = 1;
+}
+
+message TrafficLight {
+  required string color = 1;
+}
+
+message LaneMarkers {
+  repeated LaneMarker list_of_lane_markers = 1;
+}
+
+message RoadBounds {
+  repeated RoadBound list_of_road_bounds = 1;
+}
+
+message TrafficLightStopPoints {
+  repeated TrafficLightStopPoint list_of_traffic_light_stop_points = 1;
+}
+
+message TrafficLights {
+  repeated TrafficLight list_of_traffic_light = 1;
+}
+
+message BoundingBox2D {
+  required string name = 1;
+  required BoundingBox bounding_box_2d = 2;
+}
+
+message Empty {
+
+}
