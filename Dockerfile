@@ -14,4 +14,4 @@ WORKDIR /maya
 RUN conda env create -f environment.yml
 RUN apt-get install --yes emacs
 CMD /bin/bash -c  "source activate maya_public \
-    && python test_maya.py --batch_mode --maya_path artifacts/car_race.x86_64"
+    && python test_maya.py --batch_mode --maya_path car_race.x86_64"
