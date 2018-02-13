@@ -15,10 +15,12 @@ Date: Feb 2018
 - ``sudo cp -rf artifacts/nanomsg /usr/local/include/nanomsg``
 - download simulator from AWS s3 buckets
 ``aws s3 cp --recursive s3://athena-robotics-maya/car_race.app ./car_race.app``
+``aws s3 cp --recursive s3://athena-robotics-maya/car_race.x86_64 ./car_race.x86_64``
+``aws s3 cp --recursive s3://athena-robotics-maya/car_race_Data ./car_race_Data``
 - Mac build\
-``artifacts/car_race.app/Contents/MacOS/car_race``
+``car_race.app/Contents/MacOS/car_race``
 - Ubuntu build\
-``artifacts/car_race.x86_64``
+``car_race.x86_64``
 
 ### run maya with some unit-test of data logging and control commands
 - ``conda env create -f environment.yml``
@@ -28,13 +30,13 @@ Date: Feb 2018
 - compile the protocol buffer \
 ``python -m grpc_tools.protoc -I./protos/ --python_out=. --grpc_python_out=. ./protos/message.proto``
 - Sending control commands and log vehicle data\
-``python test_maya.py --maya_path artifacts/car_race.x86_64``
+``python test_maya.py --maya_path car_race.x86_64``
 - Log lidar point cloud \
-``python test_maya.py --maya_path artifacts/car_race.x86_64 --dump_lidar``
+``python test_maya.py --maya_path car_race.x86_64 --dump_lidar``
 - Log HD map \
-``python test_maya.py --maya_path artifacts/car_race.x86_64 --dump_hd_map``
+``python test_maya.py --maya_path car_race.x86_64 --dump_hd_map``
 - Log image data\
-``python test_maya.py --maya_path artifacts/car_race.x86_64 --dump_png``
+``python test_maya.py --maya_path car_race.x86_64 --dump_png``
 
 ## Setup using Docker
 - pull the docker image from Docker Hub\
