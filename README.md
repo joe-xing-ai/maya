@@ -15,15 +15,15 @@ Date: Feb 2018
 - ``sudo cp artifacts/libnanomsg.so.5.1.0 /usr/local/lib/libnanomsg.so``
 - ``sudo cp -rf artifacts/nanomsg /usr/local/include/nanomsg``
 - Download simulator from AWS s3 buckets, free public access\
-for MAC, download .app\
+for MAC, download .app (GUI mode)\
 ``aws s3 cp --recursive s3://athena-robotics-maya/car_race.app ./car_race.app``\
-for Linux, download .x86_64 and the data folder\
-``aws s3 cp s3://athena-robotics-maya/car_race.x86_64 ./car_race.x86_64``\
-``aws s3 cp --recursive s3://athena-robotics-maya/car_race_Data ./car_race_Data``
+for Linux, download .x86_64 (GUI and batch mode) and the data folder\
+``aws s3 cp s3://athena-robotics-maya/car_race_gui.x86_64 ./car_race_gui.x86_64``\
+``aws s3 cp --recursive s3://athena-robotics-maya/car_race_gui_Data ./car_race_gui_Data``
 - For Mac build, you might need to add permissions +x after downloading from AWS S3\
 ``car_race.app/Contents/MacOS/car_race``
 - For Ubuntu build, you might need to add permissions +x after downloading from AWS S3\
-``car_race.x86_64``
+``car_race_gui.x86_64``
 
 ### run maya with some unit-test of data logging and control commands
 - ``conda env create -f environment.yml``
@@ -33,13 +33,13 @@ for Linux, download .x86_64 and the data folder\
 - compile the protocol buffer \
 ``python -m grpc_tools.protoc -I./protos/ --python_out=. --grpc_python_out=. ./protos/message.proto``
 - Sending control commands and log vehicle data\
-``python test_maya.py --maya_path ./car_race.x86_64``
+``python test_maya.py --maya_path ./car_race_gui.x86_64``
 - Log lidar point cloud \
-``python test_maya.py --maya_path ./car_race.x86_64 --dump_lidar``
+``python test_maya.py --maya_path ./car_race_gui.x86_64 --dump_lidar``
 - Log HD map \
-``python test_maya.py --maya_path ./car_race.x86_64 --dump_hd_map``
+``python test_maya.py --maya_path ./car_race_gui.x86_64 --dump_hd_map``
 - Log image data\
-``python test_maya.py --maya_path ./car_race.x86_64 --dump_png``
+``python test_maya.py --maya_path ./car_race_gui.x86_64 --dump_png``
 
 ## Setup using Docker
 - pull the docker image from Docker Hub\
