@@ -1,14 +1,15 @@
 import tensorflow as tf
+import time
 
 from nanomsg import Socket, PUB, SUB_SUBSCRIBE, SUB, REQ, PAIR
 
-from configuration import wake_up_maya, parse_data, parse_lidar_data, parse_hd_map, parse_image, maya_to_sleep
+from utilities import wake_up_maya, parse_data, parse_lidar_data, parse_hd_map, parse_image, maya_to_sleep
 
 FLAGS = tf.app.flags.FLAGS
 
 tf.logging.set_verbosity("INFO")
 
-tf.flags.DEFINE_string("maya_path", "/Users/joe.xing/Downloads/private_gitlab/maya/car_race.app/Contents/MacOS/car_race", "path to maya simulation engine")  # NOQA
+tf.flags.DEFINE_string("maya_path", "car_race.app/Contents/MacOS/car_race", "path to maya simulation engine")  # NOQA
 tf.flags.DEFINE_string("constraints_for_training", "0,0;1,1", "the constraints points for training the RL")
 tf.flags.DEFINE_string("start_position", "1:124.716:-566.066:-0.4:0:0.0:0.0:0.0:"
                                          "9:124.716:-454.06600000000003:-0.4:4:0.0:0.0:0.0:"
@@ -47,18 +48,40 @@ tf.flags.DEFINE_float("camera_height", 3, "follow camera height")
 tf.flags.DEFINE_float("camera_look_at_height", 0.5, "follow camera look at height")
 tf.flags.DEFINE_bool("skeleton", False, "display skeleton mode or not")
 tf.flags.DEFINE_string("intent_render_format", "text", "control maya simulator to render text or gui format of intent prediction")  # NOQA
+tf.flags.DEFINE_bool("batch_mode", False, "run in batch mode, no graphics")
 
 
 def test_vehicle_data_logging():
     proc = wake_up_maya(start_position=None, constraints_for_training=None)
 
+    # read data
     socket = Socket(SUB)
-    socket.set_string_option(SUB, SUB_SUBSCRIBE, "Publish Counter")
+    socket.set_string_option(SUB, SUB_SUBSCRIBE, b"Publish Counter")
     socket.connect(FLAGS.log_port)
 
-    vehicle_data = socket.recv()
-    msg = parse_data(vehicle_data)
-    tf.logging.info("%s" % msg)
+    # send control commands
+    socket_out = Socket(PAIR)
+    socket_out.connect(FLAGS.control_port)
+
+    num_of_agents = 9
+    num_of_steps = 30
+
+    for steps in range(num_of_steps):
+        for ptr in range(num_of_agents):
+            vehicle_data = socket.recv()
+            msg = parse_data(vehicle_data)
+            tf.logging.info("%s" % msg)
+        control_signal = "%s:%s" % (int(time.time() * 1000), 0)
+        motor = 0.5
+        brake = 0.
+        steer = 0.
+        hand_brake = 0.
+        left_light = 0
+        right_light = 0
+        control_signal += ":%s:%s:%s:%s:%s:%s:%s" % ("my_ego_vehicle", motor, brake, steer, hand_brake,
+                                                     left_light, right_light)
+        socket_out.send(control_signal.encode())
+
     maya_to_sleep(proc)
 
 
@@ -66,7 +89,7 @@ def test_lidar_logging():
     proc = wake_up_maya(start_position=None, constraints_for_training=None)
 
     socket = Socket(SUB)
-    socket.set_string_option(SUB, SUB_SUBSCRIBE, "lidar")
+    socket.set_string_option(SUB, SUB_SUBSCRIBE, b"lidar")
     socket.connect(FLAGS.log_port_lidar)
     lidar = socket.recv()
     ts, point_cloud = parse_lidar_data(lidar)
@@ -78,7 +101,7 @@ def test_hd_map_logging():
     proc = wake_up_maya(start_position=None, constraints_for_training=None)
 
     socket = Socket(SUB)
-    socket.set_string_option(SUB, SUB_SUBSCRIBE, "hd_map")
+    socket.set_string_option(SUB, SUB_SUBSCRIBE, b"hd_map")
     socket.connect(FLAGS.log_port_hd_map)
     hd_map = socket.recv()
     my_hd_map = parse_hd_map(hd_map)
@@ -91,7 +114,7 @@ def test_image_logging():
     proc = wake_up_maya(start_position=None, constraints_for_training=None)
 
     socket = Socket(SUB)
-    socket.set_string_option(SUB, SUB_SUBSCRIBE, "image")
+    socket.set_string_option(SUB, SUB_SUBSCRIBE, b"image")
     socket.connect(FLAGS.log_port_image)
     image = socket.recv()
     ts, image = parse_image(image)
