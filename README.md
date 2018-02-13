@@ -52,6 +52,8 @@ for Linux, download .x86_64 and the data folder\
 We will provide various collision traffic scenes with a standard scoring system to measure the
 performance of engaged planning algorithm, collision avoidance, etc.
 
+## Example of scenes
+![Screenshot](Fig1.png)
 
 ## Example a proto buffer message of vehicle data
 
