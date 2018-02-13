@@ -13,6 +13,8 @@ Date: Feb 2018
 ### run maya in standalone mode
 - ``sudo cp artifacts/libnanomsg.so.5.1.0 /usr/local/lib/libnanomsg.so``
 - ``sudo cp -rf artifacts/nanomsg /usr/local/include/nanomsg``
+- download simulator from AWS s3 buckets
+``aws s3 cp --recursive s3://athena-robotics-maya/car_race.app ./car_race.app``
 - Mac build\
 ``artifacts/car_race.app/Contents/MacOS/car_race``
 - Ubuntu build\
@@ -192,5 +194,5 @@ traffic_light_stop_points {\
       z: 477.2013854980469\
     }\
   }\
-}\
+}
 
