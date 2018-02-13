@@ -18,7 +18,7 @@ Date: Feb 2018
 for MAC, download .app\
 ``aws s3 cp --recursive s3://athena-robotics-maya/car_race.app ./car_race.app``\
 for Linux, download .x86_64 and the data folder\
-``aws s3 cp --recursive s3://athena-robotics-maya/car_race.x86_64 ./car_race.x86_64``\
+``aws s3 cp s3://athena-robotics-maya/car_race.x86_64 ./car_race.x86_64``\
 ``aws s3 cp --recursive s3://athena-robotics-maya/car_race_Data ./car_race_Data``
 - For Mac build, you might need to add permissions +x after downloading from AWS S3\
 ``car_race.app/Contents/MacOS/car_race``
@@ -33,19 +33,21 @@ for Linux, download .x86_64 and the data folder\
 - compile the protocol buffer \
 ``python -m grpc_tools.protoc -I./protos/ --python_out=. --grpc_python_out=. ./protos/message.proto``
 - Sending control commands and log vehicle data\
-``python test_maya.py --maya_path car_race.x86_64``
+``python test_maya.py --maya_path ./car_race.x86_64``
 - Log lidar point cloud \
-``python test_maya.py --maya_path car_race.x86_64 --dump_lidar``
+``python test_maya.py --maya_path ./car_race.x86_64 --dump_lidar``
 - Log HD map \
-``python test_maya.py --maya_path car_race.x86_64 --dump_hd_map``
+``python test_maya.py --maya_path ./car_race.x86_64 --dump_hd_map``
 - Log image data\
-``python test_maya.py --maya_path car_race.x86_64 --dump_png``
+``python test_maya.py --maya_path ./car_race.x86_64 --dump_png``
 
 ## Setup using Docker
 - pull the docker image from Docker Hub\
 ``docker pull joexingai/maya``
-- Launch the container for unit-test\
-``docker run -it joexingai/maya``
+- Launch the container for unit-test, for example \
+``docker run -it joexingai/maya /bin/bash -c \
+"source activate maya_public && chmod +x car_race.x86_64 && python test_maya.py \
+--batch_mode --maya_path ./car_race.x86_64"``
 
 ## Future content
 
