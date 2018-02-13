@@ -11,15 +11,18 @@ Date: Feb 2018
 
 ## Setup on your local machine
 ### run maya in standalone mode
+- Install Nanomsg
 - ``sudo cp artifacts/libnanomsg.so.5.1.0 /usr/local/lib/libnanomsg.so``
 - ``sudo cp -rf artifacts/nanomsg /usr/local/include/nanomsg``
-- download simulator from AWS s3 buckets
-``aws s3 cp --recursive s3://athena-robotics-maya/car_race.app ./car_race.app``
-``aws s3 cp --recursive s3://athena-robotics-maya/car_race.x86_64 ./car_race.x86_64``
+- Download simulator from AWS s3 buckets, free public access\
+for MAC, download .app\
+``aws s3 cp --recursive s3://athena-robotics-maya/car_race.app ./car_race.app``\
+for Linux, download .x86_64 and the data folder\
+``aws s3 cp --recursive s3://athena-robotics-maya/car_race.x86_64 ./car_race.x86_64``\
 ``aws s3 cp --recursive s3://athena-robotics-maya/car_race_Data ./car_race_Data``
-- Mac build\
+- For Mac build, you might need to add permissions +x after downloading from AWS S3\
 ``car_race.app/Contents/MacOS/car_race``
-- Ubuntu build\
+- For Ubuntu build, you might need to add permissions +x after downloading from AWS S3\
 ``car_race.x86_64``
 
 ### run maya with some unit-test of data logging and control commands
