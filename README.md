@@ -19,7 +19,7 @@ Date: Feb 2018
   You might also need this for dlopen ``sudo ln -s /usr/lib/libdl.dylib /usr/local/lib/libdl.so``
   - Both Linux and Mac\
   ``sudo cp -rf artifacts/nanomsg /usr/local/include/nanomsg``
-- Download simulator from AWS s3 buckets, free public access\
+- Download simulator from AWS s3 buckets, free public access
   - for MAC, download .app (GUI mode)\
   ``aws s3 cp --recursive s3://athena-robotics-maya/car_race.app ./car_race.app``
   - for Linux, download .x86_64 (GUI and batch mode) and the data folder\
