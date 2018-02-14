@@ -23,7 +23,7 @@ Date: Feb 2018
   - for MAC, download .app (GUI mode)\
   ``aws s3 cp --recursive s3://athena-robotics-maya/car_race.app ./car_race.app``
   - for Linux, download .x86_64 (GUI and batch mode) and the data folder\
-  ``aws s3 cp s3://athena-robotics-maya/car_race_gui.x86_64 ./car_race_gui.x86_64``
+  ``aws s3 cp s3://athena-robotics-maya/car_race_gui.x86_64 ./car_race_gui.x86_64``\
   ``aws s3 cp --recursive s3://athena-robotics-maya/car_race_gui_Data ./car_race_gui_Data``
 - For Mac build, you might need to add permissions +x after downloading from AWS S3\
 ``car_race.app/Contents/MacOS/car_race``
