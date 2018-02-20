@@ -7,6 +7,7 @@ Examples of reading vehicle data, LIDAR point clouds, image data, HD map data, a
 control commands to the vehicles are also provided in this repo.
 
 Author: Dr. Z. Xing\
+Email: joe.xing.ai@gmail.com
 Date: Feb 2018
 
 ## Setup on your local machine
